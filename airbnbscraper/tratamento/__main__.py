@@ -5,7 +5,7 @@ import re
 
 # Defina o caminho para o arquivo JSON na pasta data
 input_file = os.path.join('data', 'resultados.json')
-output_file = os.path.join('data', 'resultados_processados.json')
+output_file = os.path.join('data', 'resultados_processados.csv')
 
 # Carregar os dados do arquivo JSON usando a codificação utf-8
 with open(input_file, encoding='utf-8') as f:
@@ -65,4 +65,4 @@ df.rename(columns={'aria_label': 'nome_passeio'}, inplace=True)
 print(df.head())
 
 # Salvar o DataFrame processado em um novo arquivo JSON usando a codificação utf-8
-df.to_json(output_file, orient='records', lines=True, force_ascii=False)
+df.to_csv(output_file, index=False)

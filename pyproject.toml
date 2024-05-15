@@ -13,6 +13,7 @@ selenium = "^4.20.0"
 mkdocs = {extras = ["material"], version = "^1.6.0"}
 mkdocstrings = {extras = ["python"], version = "^0.25.1"}
 mkdocs-material = "^9.5.22"
+pandas = "^2.2.2"
 
 
 [build-system]
