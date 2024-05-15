@@ -91,3 +91,8 @@ ROBOTSTXT_OBEY = True
 REQUEST_FINGERPRINTER_IMPLEMENTATION = "2.7"
 TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 FEED_EXPORT_ENCODING = "utf-8"
+
+
+LOG_ENABLED = True
+LOG_LEVEL = 'INFO'  # Nível de log (DEBUG, INFO, WARNING, ERROR, CRITICAL)
+LOG_FILE = 'scrapy_log.txt'  # Arquivo onde os logs serão salvos
