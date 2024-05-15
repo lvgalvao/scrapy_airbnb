@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from scrapy.http import HtmlResponse
+from airbnbscraper.items import AirbnbscraperItem
 import time
 
 class AirbnbspiderSpider(scrapy.Spider):
@@ -18,6 +19,12 @@ class AirbnbspiderSpider(scrapy.Spider):
     allowed_domains = ["airbnb.com.br"]
     start_urls = ["https://www.airbnb.com.br/s/madrid/experiences"]
 
+    custom_settings = {
+        'FEEDS': {
+        'resultados.json': {'format': 'json', 'overwrite': True},
+        }
+    }
+    
     def __init__(self, *args, **kwargs):
         """
         Inicializa o spider e o WebDriver.
@@ -40,7 +47,7 @@ class AirbnbspiderSpider(scrapy.Spider):
             response (HtmlResponse): A resposta inicial da página.
 
         Yields:
-            dict: Um dicionário contendo os dados extraídos de cada produto.
+            AirbnbscraperItem: Um item contendo os dados extraídos de cada produto.
         """
         self.driver.get(response.url)
 
@@ -63,7 +70,6 @@ class AirbnbspiderSpider(scrapy.Spider):
 
         # Seleciona todos os elementos de produtos com as classes 'fjicacb' ou 'chpsl5'
         products = response.xpath('//div[contains(@class, "fjicacb") or contains(@class, "chpsl5")]')
-        self.log(f'Número total de produtos encontrados: {len(products)}')
         seen = set()
 
         for product in products:
@@ -75,19 +81,15 @@ class AirbnbspiderSpider(scrapy.Spider):
 
             if href not in seen:
                 seen.add(href)
-                self.log(f'aria-label: {aria_label}')
-                self.log(f'href: {href}')
-                self.log(f'price: {price}')
-                self.log(f'duration: {duration}')
-                self.log(f'score: {score}')
 
-                yield {
-                    'aria_label': aria_label,
-                    'href': href,
-                    'price': price,
-                    'duration': duration,
-                    'score': score
-                }
+                airbnb_item = AirbnbscraperItem()
+                airbnb_item['aria_label'] = aria_label
+                airbnb_item['href'] = href
+                airbnb_item['price'] = price
+                airbnb_item['duration'] = duration
+                airbnb_item['score'] = score
+
+                yield airbnb_item
 
     def closed(self, reason):
         """

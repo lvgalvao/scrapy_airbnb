@@ -7,6 +7,8 @@ import scrapy
 
 
 class AirbnbscraperItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+    aria_label = scrapy.Field()
+    href = scrapy.Field()
+    price = scrapy.Field()
+    duration = scrapy.Field()
+    score = scrapy.Field()
