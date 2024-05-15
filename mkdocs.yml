@@ -1,0 +1,13 @@
+site_name: AirBnB Experience Scraper Documentation
+
+nav:
+  - Home: index.md
+  - API Reference:
+      - Spider: spider.md
+
+plugins:
+  - search
+  - mkdocstrings
+
+theme:
+  name: material

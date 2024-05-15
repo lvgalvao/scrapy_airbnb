@@ -7,15 +7,41 @@ from scrapy.http import HtmlResponse
 import time
 
 class AirbnbspiderSpider(scrapy.Spider):
+    """
+    Spider para coletar dados de experiências listadas no AirBnB em Madrid.
+
+    O spider clica no botão "Mostrar mais" até que todos os produtos estejam carregados,
+    e então coleta informações sobre cada experiência, incluindo título, link, preço,
+    duração e pontuação média.
+    """
     name = "airbnbspider"
     allowed_domains = ["airbnb.com.br"]
     start_urls = ["https://www.airbnb.com.br/s/madrid/experiences"]
 
     def __init__(self, *args, **kwargs):
+        """
+        Inicializa o spider e o WebDriver.
+
+        Args:
+            *args: Argumentos posicionais.
+            **kwargs: Argumentos nomeados.
+        """
         super(AirbnbspiderSpider, self).__init__(*args, **kwargs)
         self.driver = webdriver.Chrome()  # ou webdriver.Firefox(), webdriver.Edge(), etc.
 
     def parse(self, response):
+        """
+        Método principal de parsing.
+
+        Este método navega até a URL inicial, clica no botão "Mostrar mais" até que
+        todos os produtos estejam carregados, e então coleta os dados dos produtos.
+
+        Args:
+            response (HtmlResponse): A resposta inicial da página.
+
+        Yields:
+            dict: Um dicionário contendo os dados extraídos de cada produto.
+        """
         self.driver.get(response.url)
 
         click_count = 0
@@ -64,4 +90,10 @@ class AirbnbspiderSpider(scrapy.Spider):
                 }
 
     def closed(self, reason):
+        """
+        Método chamado quando o spider é fechado.
+
+        Args:
+            reason (str): A razão pela qual o spider foi fechado.
+        """
         self.driver.quit()
