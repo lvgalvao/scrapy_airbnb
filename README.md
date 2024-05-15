@@ -72,8 +72,8 @@ airbnb-experience-scraper/
 graph TD;
     A[Iniciar Scrapy] --> B[Inicializar WebDriver]
     B --> C[Navegar para a URL de Início]
-    C --> D{Botão "Mostrar mais" Disponível?}
-    D -- Sim --> E[Clicar no Botão "Mostrar mais"]
+    C --> D{Botão 'Mostrar mais' Disponível?}
+    D -- Sim --> E[Clicar no Botão 'Mostrar mais']
     E --> F[Aguardar Carregamento]
     F --> D
     D -- Não --> G[Capturar HTML Atualizado]
